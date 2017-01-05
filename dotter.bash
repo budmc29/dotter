@@ -14,7 +14,9 @@ SELECTED_FILES=(
   ".zshrc"
   ".i3"
   ".i3status.conf"
+  ".aliases"
   "vimwiki"
+  ".profile"
 )
 
 function main()
