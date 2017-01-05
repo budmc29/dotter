@@ -17,6 +17,7 @@ SELECTED_FILES=(
   ".aliases"
   "vimwiki"
   ".profile"
+  ".Xdefaults"
 )
 
 function main()
