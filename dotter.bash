@@ -8,8 +8,8 @@ BUFFER_FOLDER="${BASE_PATH}ubuntu-dotfiles"
 
 SELECTED_FILES=(
   ".hgrc"
-  ".Xmodmap"
   ".vimrc"
+  ".hgrc"
   ".gvimrc"
   ".zshrc"
   ".i3"
