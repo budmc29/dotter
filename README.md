@@ -1,3 +1,5 @@
+# Dotter
+
 Small utility to manage config file (backup and sync).
 
 ```
