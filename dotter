@@ -102,7 +102,7 @@ Options
 
   [[--]backup|-b]
 
-  Backup the files on this machine to version control.
+  Backup the files on this machine to versino control.
 
   [[--]update|-u]
 
