@@ -1,7 +1,8 @@
-#!/bin/bash
-
+#!/usr/bin/env bash
+#
 # Backup all the specified files to version control,
-#   or update the files on this machine with the ones available online.
+# or update the files on this machine with the ones available online.
+
 BASE_PATH="$(cd; pwd)/"
 
 BUFFER_FOLDER="${BASE_PATH}ubuntu-dotfiles"
@@ -20,14 +21,12 @@ SELECTED_FILES=(
   ".Xdefaults"
 )
 
-function main()
-{
+main() {
   parse_params "$@"
   usage
 }
 
-function parse_params()
-{
+parse_params() {
   while
     (( $# > 0 ))
   do
@@ -35,11 +34,11 @@ function parse_params()
     shift
     case "$PARAM" in
       (--backup|backup|-b)
-        dotter_backup
+        backup
         exit 0
         ;;
       (--update|update|-u)
-        dotter_update
+        update
         exit 0
         ;;
       (help|--help|-h)
@@ -54,10 +53,9 @@ function parse_params()
   done
 }
 
-function dotter_backup()
-{
+backup() {
   check_buffer_folder
-  # check version control for the updates and notify the user
+  # Check version control for the updates and notify the user
   for FILE in "${SELECTED_FILES[@]}"; do
     cp $BASE_PATH$FILE -r $BUFFER_FOLDER
   done
@@ -68,20 +66,17 @@ function dotter_backup()
   exit 0
 }
 
-function update()
-{
+update() {
   echo "[wip] update"
 }
 
-function check_buffer_folder()
-{
+check_buffer_folder() {
   if [[ ! -a "$BUFFER_FOLDER" ]]; then
     mkdir $BUFFER_FOLDER
   fi
 }
 
-function version_control_commit()
-{
+version_control_commit() {
   cd $BUFFER_FOLDER
 
   git add -A
@@ -89,10 +84,8 @@ function version_control_commit()
   git push
 }
 
-function usage()
-{
+usage() {
   printf "%b" "
-
 Usage:
 
   dotter [options]
