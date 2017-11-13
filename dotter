@@ -3,11 +3,11 @@
 # Backup all the specified files to version control,
 # or update the files on this machine with the ones available online.
 
-BASE_PATH="$(cd; pwd)/"
+base_path="$(cd; pwd)/"
 
-BUFFER_FOLDER="${BASE_PATH}ubuntu-dotfiles"
+buffer_folder="${base_path}ubuntu-dotfiles"
 
-SELECTED_FILES=(
+selected_files=(
   ".hgrc"
   ".vimrc"
   ".hgrc"
@@ -30,9 +30,9 @@ parse_params() {
   while
     (( $# > 0 ))
   do
-    PARAM="$1"
+    param="$1"
     shift
-    case "$PARAM" in
+    case "$param" in
       (--backup|backup|-b)
         backup
         exit 0
@@ -60,18 +60,26 @@ parse_params() {
 backup() {
   check_buffer_folder
   # Check version control for the updates and notify the user
-  for FILE in "${SELECTED_FILES[@]}"; do
-    cp $BASE_PATH$FILE -r $BUFFER_FOLDER
+  for file in "${selected_files[@]}"; do
+    cp $base_path$file -r $buffer_folder
   done
 
   version_control_commit
 
-  echo "All files copied successfully"
+  echo "All files backed up successfully"
   exit 0
 }
 
 update() {
-  echo "[Wip] update"
+  cd $buffer_folder
+
+  git pull
+
+  for file in "${selected_files[@]}"; do
+    cp -vr --backup=numbered "$base_path$file" $base_path
+  done
+
+  echo "All files updated successfully"
 }
 
 cron() {
@@ -79,16 +87,16 @@ cron() {
 }
 
 check_buffer_folder() {
-  if [[ ! -a "$BUFFER_FOLDER" ]]; then
-    mkdir $BUFFER_FOLDER
+  if [[ ! -a "$buffer_folder" ]]; then
+    mkdir $buffer_folder
   fi
 }
 
 version_control_commit() {
-  cd $BUFFER_FOLDER
+  cd $buffer_folder
 
   git add -A
-  git commit
+  git commit -v
   git push
 }
 
@@ -102,7 +110,7 @@ Options
 
   [[--]backup|-b]
 
-  Backup the files on this machine to versino control.
+  Backup the files on this machine to version control.
 
   [[--]update|-u]
 
