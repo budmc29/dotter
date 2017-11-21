@@ -7,6 +7,7 @@ base_path="$(cd; pwd)/"
 
 buffer_folder="${base_path}ubuntu-dotfiles"
 
+# TODO: Extract this to config file
 selected_files=(
   ".hgrc"
   ".vimrc"
